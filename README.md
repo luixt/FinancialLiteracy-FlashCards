@@ -37,7 +37,7 @@ GIF created with ScreenToGif
 
 ## Notes
 
-It was challenging to make the animation of the card flipping correctly. At first it was even ahrd to come up with the right logic to display only 1 face at a time. Also experienced many bugs when trying to set up the "next" button function. However, I found it useful to separate the cards into its own component.
+It was challenging to make the animation of the card flipping correctly. At first it was even hard to come up with the right logic to display only 1 face at a time. I also experienced many bugs when trying to set up the "next" button function. However, I found it useful to separate the cards into its own component.
 
 ## License
 
