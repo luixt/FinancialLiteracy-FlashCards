@@ -4,33 +4,81 @@ import './App.css'
 
 const cardData = [
   // Easy Questions
-  { question: "What is a Stock in the Market?", answer: "A stock represents a share in the ownership of a company.", color: "yellowgreen" },
-  { question: "What is an ETF?", answer: "An ETF is a collection of assets traded on stock exchanges, similar to stocks.", color: "yellowgreen" },
-  { question: "What is a Dividend?", answer: "A dividend is a portion of a company's earnings distributed to shareholders.", color: "yellowgreen" },
-  { question: "What is a Bond?", answer: "A bond is a fixed income investment where an investor loans money to an entity at a fixed interest rate.", color: "yellowgreen" },
-  { question: "What does ROI stand for?", answer: "ROI stands for Return on Investment, a measure of the profitability of an investment.", color: "yellowgreen" },
+  { question: "An ____ is a collection of assets traded on stock exchanges.", answer: "ETF", color: "yellowgreen" },
+  { question: "What do we call the profit share from a company?", answer: "Dividend", color: "yellowgreen" },
+  { question: "A loan security is known as a ____.", answer: "Bond", color: "yellowgreen" },
+  { question: "Ownership in a company is called a ____.", answer: "Stock", color: "yellowgreen" },
+  { question: "ROI stands for ____.", answer: "Return on Investment", color: "yellowgreen" },
 
   // Medium Questions
-  { question: "What is the difference between a Bull Market and a Bear Market?", answer: "A bull market is characterized by rising prices, while a bear market is marked by declining prices.", color: "rgb(251, 251, 113)" },
-  { question: "What is a Mutual Fund?", answer: "A mutual fund pools money from investors to invest in a diversified portfolio of stocks, bonds, or other securities.", color: "rgb(251, 251, 113)" },
-  { question: "What is Compound Interest?", answer: "Compound interest is the interest on both the initial principal and the accumulated interest.", color: "rgb(251, 251, 113)" },
-  { question: "What is an Index Fund?", answer: "An index fund is a mutual fund or ETF designed to track a specified index.", color: "rgb(251, 251, 113)" },
-  { question: "What is a Credit Score?", answer: "A credit score is a numerical representation of a person's creditworthiness, based on their credit history.", color: "rgb(251, 251, 113)" },
+  { question: "The trend of rising prices is a ____ market.", answer: "Bull", color: "rgb(251, 251, 113)" },
+  { question: "A fund pooling money for investment is a ____ fund.", answer: "Mutual", color: "rgb(251, 251, 113)" },
+  { question: "What type of interest is calculated on both principal and accumulated interest?", answer: "Compound", color: "rgb(251, 251, 113)" },
+  { question: "An investment fund designed to track an index is an ____ fund.", answer: "Index", color: "rgb(251, 251, 113)" },
+  { question: "A numerical measure of creditworthiness is called a ____ score.", answer: "Credit", color: "rgb(251, 251, 113)" },
 
   // Hard Questions
-  { question: "What is the Efficient Market Hypothesis (EMH)?", answer: "EMH suggests that asset prices reflect all available information, making it impossible to consistently achieve higher returns than the average market.", color: "lightcoral" },
-  { question: "What is a Derivative?", answer: "A derivative is a financial contract whose value is linked to the price of an underlying asset, such as stocks or bonds.", color: "lightcoral" },
-  { question: "What are Hedge Funds?", answer: "Hedge funds are investment funds that employ strategies to produce high returns, often using leverage and short-selling.", color: "lightcoral" },
-  { question: "What is a Capital Asset Pricing Model (CAPM)?", answer: "CAPM is a model used to determine the expected return on an investment based on its risk compared to the overall market.", color: "lightcoral" },
-  { question: "What is Financial Leverage?", answer: "Financial leverage refers to the use of borrowed capital to increase the potential return of an investment.", color: "lightcoral" }
+  { question: "The concept where prices reflect all available information is ____.", answer: "EMH", color: "lightcoral" },
+  { question: "A financial contract linked to an asset's price is a ____.", answer: "Derivative", color: "lightcoral" },
+  { question: "Funds using leverage for high returns are ____ funds.", answer: "Hedge", color: "lightcoral" },
+  { question: "The model to determine expected return based on risk is called ____.", answer: "CAPM", color: "lightcoral" },
+  { question: "Using borrowed capital to increase returns is called ____ leverage.", answer: "Financial", color: "lightcoral" }
 ];
 
 function App() {
 
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
+  const [shuffledCards, setShuffledCards] = useState(cardData);
+  const [userInput, setUserInput] = useState('');
+  const [feedback, setFeedback] = useState('');
+  const [currentStreak, setCurrentStreak] = useState(0);
+  const [longestStreak, setLongestStreak] = useState(0);
+
+  const shuffleArray = (array) => {
+    return array.slice().sort(() => Math.random() - 0.5);
+  };
 
   const handleNextCard = () => {
-    setCurrentCardIndex((prevIndex) => (prevIndex + 1) % cardData.length);
+    setCurrentCardIndex((prevIndex) => (prevIndex + 1) % shuffledCards.length);
+    setUserInput('');
+    setFeedback('');
+  };
+
+  const handlePreviousCard = () => {
+    setCurrentCardIndex((prevIndex) => 
+      (prevIndex === 0 ? shuffledCards.length - 1 : prevIndex - 1)
+    );
+    setUserInput('');
+    setFeedback('');
+  };
+
+  const handleShuffleCard = () => {
+    const shuffledArray = shuffleArray(cardData);
+    setShuffledCards(shuffledArray);
+    setCurrentCardIndex(0);
+    setUserInput('');
+    setFeedback('');
+  };
+
+  const handleChange = (e) => {
+    setUserInput(e.target.value); // Update user input
+  };
+
+  const onCheckAnswer = () => {
+    const correctAnswer = shuffledCards[currentCardIndex].answer.toLowerCase();
+    if (userInput.trim().toLowerCase() === correctAnswer) {
+      setFeedback('Correct! 🎉');
+      setCurrentStreak((prev) => {
+        const newStreak = prev + 1;
+        setLongestStreak((prevLongest) => Math.max(prevLongest, newStreak));
+        return newStreak;
+      });
+    } else if (userInput.trim() === '') {
+      setFeedback('Please enter your guess before submitting!');
+    } else {
+      setFeedback('Incorrect! Try Again!');
+      setCurrentStreak(0);
+    }
   };
 
   return (
@@ -39,14 +87,40 @@ function App() {
         <h1>Financial Literacy Ultimate Quiz!</h1>
         <h3>Learn the common concepts involved in the finance and accounting field! Are your ready to be a Business Owner?</h3>
         <h4>Number of flash cards: {cardData.length}</h4>
+        <div className='streaks'>
+          <h4>Current Streak: {currentStreak}</h4>
+          <h4>Longest Streak: {longestStreak}</h4>
+        </div>
       </div>
+      <br></br>
       <Card 
-      question={cardData[currentCardIndex].question} 
-      answer={cardData[currentCardIndex].answer}
-      color={cardData[currentCardIndex].color} 
+      question={shuffledCards[currentCardIndex].question} 
+      answer={shuffledCards[currentCardIndex].answer}
+      color={shuffledCards[currentCardIndex].color}
       />
       <br></br>
-      <button onClick={handleNextCard} type="next">⭢</button>
+      <div className="buttons">
+        <button onClick={handlePreviousCard} type="prev">⭠</button>
+        <button onClick={handleNextCard} type="next">⭢</button>
+      </div>
+
+      <div className="input-section">
+        <input
+          type="text"
+          value={userInput}
+          placeholder="Enter your guess..."
+          onChange={handleChange}
+          className="textbox"
+        />
+        <button onClick={onCheckAnswer} className="submit-button">Submit</button>
+      </div>
+
+      <div className="feedback">
+        {feedback}
+      </div>
+
+      <button id="shuffle-button" onClick={handleShuffleCard} type="shuffle">🔀 Shuffle 🤡</button>
+      
     </div>
   )
 }

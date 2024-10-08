@@ -12,8 +12,10 @@
 }
 
 .title {
-  color: darkblue;
-  text-shadow: 0px 0px 3px lightblue;
+  color: white;
+  width: 80vw;
+  text-shadow: 0px 0px 3px darkblue;
+  background-color: rgba(0, 0, 0, 0.700);
 }
 
 
@@ -28,6 +30,10 @@ button {
   background-color: lightblue;
   cursor: pointer;
   transition: border-color .25s;
+  margin-left: 5px;
+  margin-right: 5px;
+  text-shadow: 0.5px 0.5px 0.5px grey, 1px 1px 1px grey;
+
 }
 
 button:hover {
@@ -40,4 +46,86 @@ button:active {
 
   background-color: darkblue;
 
+}
+
+.buttons{
+
+  display: flex;
+  flex-direction: row;
+  place-items: center;
+  align-items: center;
+  text-align: center;
+}
+
+#shuffle-button {
+  background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 8px;
+  text-transform: uppercase;
+  transition-property: background-color;
+  transition-duration: 0.3s;
+  transition-timing-function: ease;
+  margin-top: 10px;
+  text-shadow: 1px 1px 1px black, 2.5px 2.5px 2.5px black, 3.2px 3.2px 3.2px black;
+}
+
+#shuffle-button:hover {
+  box-shadow: 5px 5px 5px grey;
+  background: linear-gradient(90deg, violet, indigo, blue, green, yellow, orange, red);
+}
+
+#shuffle-button:active {
+  box-shadow: 5px 5px 5px black;
+}
+
+.input-section{
+  display: flex;
+  flex-direction: row;
+  place-items: center;
+}
+
+.textbox {
+  width: 250px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-top: 10px;
+}
+
+.submit-button {
+  padding: 10px 20px;
+  margin-left: 10px;
+  border: none;
+  background-color: green;
+  color: white;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-top: 10px;
+}
+
+.submit-button:hover {
+  background-color: darkgreen;
+}
+
+.submit-button:active {
+  box-shadow: 2px 2px 2px grey;
+}
+
+.feedback {
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.streaks{
+
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+  align-items: center;
+  justify-content: space-evenly;
+  color: orange;
 }
