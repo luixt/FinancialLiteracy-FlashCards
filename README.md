@@ -40,6 +40,8 @@ GIF created with ScreenToGif
 [ScreenToGif](https://www.screentogif.com/) for Windows
 [peek](https://github.com/phw/peek) for Linux. -->
 
+**You can try it here: [Financial Literacy Flash Cards](https://luixt.github.io/FinancialLiteracy-FlashCards/)**
+
 ## Notes
 
 I experienced extreme challenges behind the logic of the shuffle button, it was probably the most difficult
